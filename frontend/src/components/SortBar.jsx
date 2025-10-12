@@ -2,9 +2,9 @@
 
 export default function SortBar({ sortBy, order, onChange }) {
   return (
-    <div className="flex gap-3 flex-wrap mb-3">
+    <div className="flex gap-3 justify-center flex-wrap">
       <select
-        className="border border-slate-200 rounded-md px-3 py-2"
+        className="border border-slate-200 px-2 py-2"
         value={sortBy}
         onChange={(e) => onChange({ sortBy: e.target.value, order })}
       >
@@ -15,7 +15,7 @@ export default function SortBar({ sortBy, order, onChange }) {
         <option value="status">Status</option>
       </select>
       <select
-        className="border border-slate-200 rounded-md px-3 py-2"
+        className="border border-slate-200 px-2 py-2"
         value={order}
         onChange={(e) => onChange({ sortBy, order: e.target.value })}
       >

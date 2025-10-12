@@ -13,7 +13,7 @@ export default function SearchBar({ value, onChange, placeholder = "Search by na
 
   return (
     <input
-      className="border border-slate-200 rounded-md px-3 py-2 w-full sm:w-64"
+      className="border border-slate-200 rounded-full px-3 py-2 w-64 sm:w-72"
       placeholder={placeholder}
       value={local}
       onChange={(e) => setLocal(e.target.value)}

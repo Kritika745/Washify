@@ -2,10 +2,10 @@ import mongoose from "mongoose"
 
 const CarDetailsSchema = new mongoose.Schema(
   {
-    make: { type: String, trim: true },
-    model: { type: String, trim: true },
-    year: { type: Number, min: 1950, max: 2100 },
-    type: { type: String, trim: true }, // sedan, suv, hatchback, luxury
+   make: { type: String, trim: true, required: true },
+    model: { type: String, trim: true, required: true },
+    year: { type: Number, min: 1950, max: 2100, required: true },
+    type: { type: String, trim: true, required: true }, // sedan, suv, hatchback, luxury
   },
   { _id: false },
 )
@@ -13,23 +13,25 @@ const CarDetailsSchema = new mongoose.Schema(
 const BookingSchema = new mongoose.Schema(
   {
     customerName: { type: String, required: true, trim: true },
-    carDetails: { type: CarDetailsSchema, default: {} },
+    carDetails: { type: CarDetailsSchema, required: true }, // required object with required subfields
     serviceType: {
       type: String,
       enum: ["Basic Wash", "Deluxe Wash", "Full Detailing"],
+      required: true,
       default: "Basic Wash",
     },
-    date: { type: Date },
-    timeSlot: { type: String, trim: true },
-    duration: { type: Number, min: 0 }, // minutes
-    price: { type: Number, min: 0 },
+    date: { type: Date, required: true },
+    timeSlot: { type: String, trim: true }, 
+    duration: { type: Number, min: 0, required: true }, // minutes
+    price: { type: Number, min: 0, required: true },
     status: {
       type: String,
       enum: ["Pending", "Confirmed", "Completed", "Cancelled"],
+      required: true,
       default: "Pending",
     },
     rating: { type: Number, min: 1, max: 5 },
-    addOns: [{ type: String, trim: true }],
+    addOns: [{ type: String, trim: true }], 
     isDeleted: { type: Boolean, default: false },
     deletedAt: { type: Date, default: null },
   },

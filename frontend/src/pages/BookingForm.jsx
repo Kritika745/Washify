@@ -116,31 +116,35 @@ export default function BookingForm({ mode }) {
                 />
               </FormField>
               <div /> {/* Spacer */}
-              <FormField label="Car Make">
+              <FormField label="Car Make*">
                 <input
                   className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none"
+                  required
                   value={data.carDetails.make}
                   onChange={(e) => setData({ ...data, carDetails: { ...data.carDetails, make: e.target.value } })}
                 />
               </FormField>
-              <FormField label="Car Model">
+              <FormField label="Car Model*">
                 <input
                   className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none"
+                  required
                   value={data.carDetails.model}
                   onChange={(e) => setData({ ...data, carDetails: { ...data.carDetails, model: e.target.value } })}
                 />
               </FormField>
-              <FormField label="Car Year">
+              <FormField label="Car Year*">
                 <input
                   className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none"
+                  required
                   type="number"
                   value={data.carDetails.year}
                   onChange={(e) => setData({ ...data, carDetails: { ...data.carDetails, year: e.target.value } })}
                 />
               </FormField>
-              <FormField label="Car Type">
+              <FormField label="Car Type*">
                 <select
                   className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none"
+                  required
                   value={data.carDetails.type}
                   onChange={(e) => setData({ ...data, carDetails: { ...data.carDetails, type: e.target.value } })}
                 >
@@ -158,8 +162,8 @@ export default function BookingForm({ mode }) {
             {/* --- Service & Schedule --- */}
             <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <legend className="font-semibold text-slate-800 text-lg mb-2 col-span-full">Service & Schedule</legend>
-              <FormField label="Service Type">
-                <select className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" value={data.serviceType} onChange={(e) => setData({ ...data, serviceType: e.target.value })}>
+              <FormField label="Service Type*">
+                <select required className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" value={data.serviceType} onChange={(e) => setData({ ...data, serviceType: e.target.value })}>
                   <option>Basic Wash</option>
                   <option>Deluxe Wash</option>
                   <option>Full Detailing</option>
@@ -168,8 +172,8 @@ export default function BookingForm({ mode }) {
               <FormField label="Add-ons">
                 <AddOnsSelector value={data.addOns} onChange={(v) => setData({ ...data, addOns: v })} />
               </FormField>
-              <FormField label="Date">
-                <input className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" type="date" value={data.date} onChange={(e) => setData({ ...data, date: e.target.value })} />
+              <FormField label="Date*">
+                <input required className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" type="date" value={data.date} onChange={(e) => setData({ ...data, date: e.target.value })} />
               </FormField>
               <FormField label="Time Slot">
                 <input className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" placeholder="e.g. 10:00 AM - 11:00 AM" value={data.timeSlot} onChange={(e) => setData({ ...data, timeSlot: e.target.value })} />
@@ -181,14 +185,14 @@ export default function BookingForm({ mode }) {
             {/* --- Pricing & Status --- */}
             <fieldset className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <legend className="font-semibold text-slate-800 text-lg mb-2 col-span-full">Pricing & Status</legend>
-              <FormField label="Price ($)">
-                <input className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" type="number" min="0" value={data.price} onChange={(e) => setData({ ...data, price: e.target.value })} />
+              <FormField label="Price ($)*">
+                <input required className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" type="number" min="0" value={data.price} onChange={(e) => setData({ ...data, price: e.target.value })} />
               </FormField>
-              <FormField label="Duration (minutes)">
-                <input className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" type="number" min="0" value={data.duration} onChange={(e) => setData({ ...data, duration: e.target.value })} />
+              <FormField label="Duration (minutes)*">
+                <input required className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" type="number" min="0" value={data.duration} onChange={(e) => setData({ ...data, duration: e.target.value })} />
               </FormField>
-              <FormField label="Status">
-                 <select className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" value={data.status} onChange={(e) => setData({ ...data, status: e.target.value })}>
+              <FormField label="Status*">
+                 <select required className="w-full border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none" value={data.status} onChange={(e) => setData({ ...data, status: e.target.value })}>
                   <option>Pending</option>
                   <option>Confirmed</option>
                   <option>Completed</option>
@@ -196,7 +200,7 @@ export default function BookingForm({ mode }) {
                 </select>
               </FormField>
                <FormField label="Rating">
-                <RatingStars value={data.rating || 0} onChange={(v) => setData({ ...data, rating: v })} />
+                <RatingStars  value={data.rating || 0} onChange={(v) => setData({ ...data, rating: v })} />
               </FormField>
             </fieldset>
           </div>

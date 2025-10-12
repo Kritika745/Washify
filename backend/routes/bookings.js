@@ -41,18 +41,32 @@ router.post(
   "/",
   [
     body("customerName").exists().withMessage("customerName is required").isString().trim().notEmpty(),
-    body("carDetails.make").optional().isString().trim(),
-    body("carDetails.model").optional().isString().trim(),
-    body("carDetails.year").optional().isInt({ min: 1950, max: 2100 }),
-    body("carDetails.type").optional().isString().trim(),
-    body("serviceType").optional().isIn(["Basic Wash", "Deluxe Wash", "Full Detailing"]),
-    body("date").optional().isISO8601(),
-    body("timeSlot").optional().isString().trim(),
-    body("duration").optional().isInt({ min: 0 }),
-    body("price").optional().isFloat({ min: 0 }),
-    body("status").optional().isIn(["Pending", "Confirmed", "Completed", "Cancelled"]),
-    body("rating").optional().isInt({ min: 1, max: 5 }),
-    body("addOns").optional().isArray(),
+    body("carDetails.make").exists().withMessage("carDetails.make is required").isString().trim().notEmpty(),
+    body("carDetails.model").exists().withMessage("carDetails.model is required").isString().trim().notEmpty(),
+    body("carDetails.year").exists().withMessage("carDetails.year is required").isInt({ min: 1950, max: 2100 }),
+    body("carDetails.type").exists().withMessage("carDetails.type is required").isString().trim().notEmpty(),
+
+    body("serviceType")
+      .exists()
+      .withMessage("serviceType is required")
+      .isIn(["Basic Wash", "Deluxe Wash", "Full Detailing"]),
+    body("date").exists().withMessage("date is required").isISO8601(),
+    // timeSlot optional
+    body("timeSlot")
+      .optional()
+      .isString()
+      .trim(),
+    body("duration").exists().withMessage("duration is required").isInt({ min: 0 }),
+    body("price").exists().withMessage("price is required").isFloat({ min: 0 }),
+    body("status").exists().withMessage("status is required").isIn(["Pending", "Confirmed", "Completed", "Cancelled"]),
+    body("rating")
+  .optional({ nullable: true, checkFalsy: true })
+  .isInt({ min: 1, max: 5 }),
+
+    // addOns optional
+    body("addOns")
+      .optional()
+      .isArray(),
   ],
   validate,
   createBooking,

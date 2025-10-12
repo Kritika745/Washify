@@ -84,10 +84,10 @@ export default function Home() {
       {/* Main Section */}
       <section className="flex flex-col">
         {/* Hero */}
-        <div className="rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-sm p-6 shadow-md flex flex-col gap-2">
-          <h1 className="text-2xl font-bold text-slate-900">Car Wash Dashboard</h1>
+        <div className="rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-sm p-4 shadow-md flex flex-col gap-2">
+          <h1 className="text-xl font-bold text-slate-900">Dashboard</h1>
           <p className="text-slate-600 text-sm">
-            Manage, track, and explore your car wash bookings with style.
+            Manage, track, and explore your car wash bookings.
           </p>
         </div>
 
@@ -100,7 +100,7 @@ export default function Home() {
                 setQ(val)
                 setPage(1)
               }}
-              placeholder="🔍 Search customer, car or service..."
+              placeholder="Search customer, car or service..."
             />
             <SortBar sortBy={sort.sortBy} order={sort.order} onChange={(val) => setSort(val)} />
           </div>
