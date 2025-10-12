@@ -60,6 +60,10 @@ export default function Home() {
     return () => (cancelled = true)
   }, [queryObj])
 
+  useEffect(() => {
+    if (page !== 1) setPage(1)
+  }, [q, filters, sort])
+
   const applyFilters = () => setPage(1)
   const resetFilters = () =>
     setFilters({
@@ -114,7 +118,7 @@ export default function Home() {
         )}
         {error && <p className="text-red-600 mt-4 text-center">{error}</p>}
         {!loading && !error && items.length === 0 && (
-          <p className="text-center text-slate-500 mt-6">No bookings found 🧼</p>
+          <p className="text-center text-slate-500 mt-6">No bookings found</p>
         )}
 
         {/* Cards grid */}
