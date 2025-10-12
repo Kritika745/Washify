@@ -1,108 +1,87 @@
 "use client"
 
 import RatingStars from "./RatingStars.jsx"
+import { Star, SlidersHorizontal, ChevronDown, RotateCw, Check } from "lucide-react";
+
+
+/**
+ * A reusable form field wrapper for the sidebar for consistent styling.
+ */
+const FilterField = ({ label, children }) => (
+  <div>
+    <label className="block text-xs font-medium text-slate-600 mb-1.5">{label}</label>
+    {children}
+  </div>
+);
 
 export default function FilterSidebar({ filters, setFilters, onApply, onReset }) {
-  const f = filters
+  const commonInputClass = "w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white focus:ring-2 focus:ring-sky-300 focus:border-sky-400 outline-none transition-colors";
+
   return (
-    <aside className="border border-slate-200 rounded-lg p-3 bg-slate-50 print:hidden">
-      <h3 className="mt-0 font-semibold">Filters</h3>
-
-      <label className="block text-sm font-medium">Service Type</label>
-      <select
-        className="border border-slate-200 rounded-md px-3 py-2 w-full sm:w-auto"
-        value={f.serviceType || ""}
-        onChange={(e) => setFilters({ ...f, serviceType: e.target.value || undefined })}
-      >
-        <option value="">Any</option>
-        <option>Basic Wash</option>
-        <option>Deluxe Wash</option>
-        <option>Full Detailing</option>
-      </select>
-
-      <div className="h-2" />
-
-      <label className="block text-sm font-medium">Status</label>
-      <select
-        className="border border-slate-200 rounded-md px-3 py-2 w-full sm:w-auto"
-        value={f.status || ""}
-        onChange={(e) => setFilters({ ...f, status: e.target.value || undefined })}
-      >
-        <option value="">Any</option>
-        <option>Pending</option>
-        <option>Confirmed</option>
-        <option>Completed</option>
-        <option>Cancelled</option>
-      </select>
-
-      <div className="h-2" />
-
-      <label className="block text-sm font-medium">Car Type</label>
-      <select
-        className="border border-slate-200 rounded-md px-3 py-2 w-full sm:w-auto"
-        value={f.carType || ""}
-        onChange={(e) => setFilters({ ...f, carType: e.target.value || undefined })}
-      >
-        <option value="">Any</option>
-        <option value="sedan">sedan</option>
-        <option value="suv">suv</option>
-        <option value="hatchback">hatchback</option>
-        <option value="luxury">luxury</option>
-      </select>
-
-      <div className="h-2" />
-
-      <label className="block text-sm font-medium">Date Range</label>
-      <div className="flex gap-2 items-center flex-wrap">
-        <input
-          className="border border-slate-200 rounded-md px-3 py-2 w-full sm:w-auto"
-          type="date"
-          value={f.startDate || ""}
-          onChange={(e) => setFilters({ ...f, startDate: e.target.value || undefined })}
-        />
-        <input
-          className="border border-slate-200 rounded-md px-3 py-2 w-full sm:w-auto"
-          type="date"
-          value={f.endDate || ""}
-          onChange={(e) => setFilters({ ...f, endDate: e.target.value || undefined })}
-        />
+    <aside className="bg-white border border-slate-200 rounded-xl shadow-sm p-5 h-fit lg:sticky lg:top-6 print:hidden">
+      {/* Sidebar Header */}
+      <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-4">
+        <div className="flex items-center gap-2">
+          <SlidersHorizontal size={18} className="text-slate-500" />
+          <h3 className="m-0 font-semibold text-slate-800">Filters</h3>
+        </div>
+        <button onClick={onReset} className="text-xs font-semibold text-sky-600 hover:text-sky-700 transition-colors">
+          Reset All
+        </button>
       </div>
 
-      <div className="h-2" />
+      {/* Filter Fields */}
+      <div className="space-y-5">
+        <FilterField label="Service Type">
+          <select className={commonInputClass} value={filters.serviceType || ""} onChange={(e) => setFilters({ ...filters, serviceType: e.target.value || undefined })}>
+            <option value="">Any</option>
+            <option>Basic Wash</option>
+            <option>Deluxe Wash</option>
+            <option>Full Detailing</option>
+          </select>
+        </FilterField>
 
-      <label className="block text-sm font-medium">Add-on</label>
-      <select
-        className="border border-slate-200 rounded-md px-3 py-2 w-full sm:w-auto"
-        value={f.addOn || ""}
-        onChange={(e) => setFilters({ ...f, addOn: e.target.value || undefined })}
-      >
-        <option value="">Any</option>
-        <option>Interior Cleaning</option>
-        <option>Polishing</option>
-        <option>Wax</option>
-        <option>Engine Bay Clean</option>
-      </select>
+        <FilterField label="Status">
+          <select className={commonInputClass} value={filters.status || ""} onChange={(e) => setFilters({ ...filters, status: e.target.value || undefined })}>
+            <option value="">Any</option>
+            <option>Pending</option>
+            <option>Confirmed</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+          </select>
+        </FilterField>
 
-      <div className="h-2" />
+        <FilterField label="Car Type">
+          <select className={commonInputClass} value={filters.carType || ""} onChange={(e) => setFilters({ ...filters, carType: e.target.value || undefined })}>
+            <option value="">Any</option>
+            <option value="sedan">Sedan</option>
+            <option value="suv">SUV</option>
+            <option value="hatchback">Hatchback</option>
+            <option value="luxury">Luxury</option>
+          </select>
+        </FilterField>
 
-      <label className="block text-sm font-medium">Min Rating</label>
-      <RatingStars value={f.minRating || 0} onChange={(v) => setFilters({ ...f, minRating: v })} />
+        <FilterField label="Date Range">
+          <div className="grid grid-cols-2 gap-2">
+            <input type="date" placeholder="Start" className={commonInputClass} value={filters.startDate || ""} onChange={(e) => setFilters({ ...filters, startDate: e.target.value || undefined })} />
+            <input type="date" placeholder="End" className={commonInputClass} value={filters.endDate || ""} onChange={(e) => setFilters({ ...filters, endDate: e.target.value || undefined })} />
+          </div>
+        </FilterField>
+        
+        <FilterField label="Minimum Rating">
+          <RatingStars value={filters.minRating || 0} onChange={(v) => setFilters({ ...filters, minRating: v })} />
+        </FilterField>
 
-      <div className="h-2" />
-
-      <div className="flex gap-2 items-center flex-wrap">
-        <button
-          className="inline-flex items-center rounded-md bg-sky-500 text-white px-3 py-2 text-sm hover:bg-sky-600"
-          onClick={onApply}
-        >
-          Apply
-        </button>
-        <button
-          className="inline-flex items-center rounded-md border border-slate-200 text-slate-900 bg-transparent px-3 py-2 text-sm hover:bg-slate-50"
-          onClick={onReset}
-        >
-          Reset
-        </button>
+        {/* Action Button */}
+        <div className="pt-2">
+             <button 
+                onClick={onApply} 
+                className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-sky-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition-all hover:bg-sky-600 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2"
+             >
+                <Check size={16} />
+                Apply Filters
+             </button>
+        </div>
       </div>
     </aside>
   )
