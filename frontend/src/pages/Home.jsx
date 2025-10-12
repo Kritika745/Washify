@@ -73,47 +73,61 @@ export default function Home() {
     })
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[280px_1fr]">
+    <div className="grid gap-6 lg:grid-cols-[280px_1fr] bg-gradient-to-br from-slate-50 via-sky-50/40 to-white p-6 rounded-2xl min-h-screen">
+      {/* Sidebar */}
       <FilterSidebar filters={filters} setFilters={setFilters} onApply={applyFilters} onReset={resetFilters} />
-      <section>
+
+      {/* Main Section */}
+      <section className="flex flex-col">
         {/* Hero */}
-        <div className="mb-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
-          <h1 className="m-0 text-xl font-semibold text-slate-900">Car Wash Bookings</h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Search, filter, and manage all your appointments in a clean, simple interface.
+        <div className="rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-sm p-6 shadow-md flex flex-col gap-2">
+          <h1 className="text-2xl font-bold text-slate-900">Car Wash Dashboard</h1>
+          <p className="text-slate-600 text-sm">
+            Manage, track, and explore your car wash bookings with style.
           </p>
         </div>
 
         {/* Toolbar */}
-        <div className="mb-4 flex flex-wrap items-center gap-3 rounded-xl border border-slate-200 bg-white p-3 shadow-sm print:hidden">
-          <SearchBar
-            value={q}
-            onChange={(val) => {
-              setQ(val)
-              setPage(1)
-            }}
-          />
-          <SortBar sortBy={sort.sortBy} order={sort.order} onChange={(val) => setSort(val)} />
+        <div className="mt-5 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white/80 backdrop-blur-md p-4 shadow-sm">
+          <div className="flex flex-wrap items-center gap-3">
+            <SearchBar
+              value={q}
+              onChange={(val) => {
+                setQ(val)
+                setPage(1)
+              }}
+              placeholder="🔍 Search customer, car or service..."
+            />
+            <SortBar sortBy={sort.sortBy} order={sort.order} onChange={(val) => setSort(val)} />
+          </div>
           <Link
-            className="inline-flex items-center rounded-md bg-sky-500 text-white px-3 py-2 text-sm hover:bg-sky-600"
+            className="inline-flex items-center rounded-xl bg-gradient-to-r from-sky-500 to-sky-600 px-4 py-2 text-sm font-medium text-white shadow hover:shadow-lg transition-all duration-200"
             to="/booking/new"
           >
             + New Booking
           </Link>
         </div>
 
-        {loading && <p>Loading...</p>}
-        {error && <p className="text-red-600">{error}</p>}
-        {!loading && !error && items.length === 0 && <p>No bookings found.</p>}
+        {/* Status */}
+        {loading && (
+          <p className="text-center text-slate-500 mt-6 animate-pulse">Loading bookings...</p>
+        )}
+        {error && <p className="text-red-600 mt-4 text-center">{error}</p>}
+        {!loading && !error && items.length === 0 && (
+          <p className="text-center text-slate-500 mt-6">No bookings found 🧼</p>
+        )}
 
         {/* Cards grid */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {items.map((b) => (
             <BookingCard key={b._id} booking={b} />
           ))}
         </div>
 
-        <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+        {/* Pagination */}
+        <div className="mt-8">
+          <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+        </div>
       </section>
     </div>
   )
