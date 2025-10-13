@@ -1,0 +1,80 @@
+# Washify - Car Wash Booking Management
+
+Washify is a full-stack web application built with the MERN (MongoDB, Express, React, Node.js) stack. It provides a simple and intuitive interface for managing car wash bookings. Users can create, view, update, delete, search, and filter bookings seamlessly.
+This project was developed as a MERN stack assessment, focusing on core CRUD functionalities, RESTful API design, and a clean user experience.
+
+## Features
+
+### Core Functionality
+- **CRUD Operations:** Full capabilities to Create, Read, Update, and Delete car wash bookings.
+- **View All Bookings:** The homepage displays all bookings in a responsive card layout with pagination (8–10 bookings per page).
+- **Detailed Booking View:** Each booking has a dedicated page showing all its details.
+- **Create & Edit Bookings:** User-friendly forms for adding new bookings and editing existing ones. The edit form comes pre-populated with the existing data.
+- **Delete Confirmation:** A confirmation modal appears before deleting a booking to prevent accidental data loss.
+
+### Search and Filtering
+- **Real-time Search:** Instantly search for bookings by Customer Name or Car Details (Make, Model).
+- **Advanced Filtering:** Filter bookings based on multiple criteria:
+  - Service Type (e.g., Basic Wash, Deluxe Wash)
+  - Car Type (e.g., Sedan, SUV)
+  - Booking Status (e.g., Pending, Confirmed, Completed)
+  - Date Range
+
+### User Experience
+- **Responsive Design:** The UI is fully responsive and optimized for both desktop and mobile devices.
+- **Loading & Error States:** Clear loading indicators and error messages are displayed during API calls to provide feedback to the user.
+- **Clean & Modern UI:** A simple and intuitive interface for a smooth user experience.
+
+## Tech Stack
+
+### Frontend
+- **React:** A JavaScript library for building user interfaces.
+- **React Router:** For client-side routing and navigation.
+- **Axios:** For making HTTP requests to the backend API.
+- **Tailwind CSS:** For modern and responsive styling.
+
+### Backend
+- **Node.js:** A JavaScript runtime for the server.
+- **Express.js:** A web application framework for Node.js.
+- **CORS:** Middleware for enabling Cross-Origin Resource Sharing.
+- **Morgan:** Middleware for logging HTTP requests.
+
+### Database
+- **MongoDB:** A NoSQL database for storing booking information.
+- **Mongoose:** An Object Data Modeling (ODM) library for MongoDB and Node.js.
+
+## Live Links
+- **Frontend Deployed Link:** [Your Deployed Frontend URL Here]  
+- **Backend API Link:** [Your Deployed Backend URL Here]
+  
+## Local Setup
+- Follow these instructions to get the project running on your local machine.
+
+### Prerequisites
+
+- Node.js 18.0 or later
+- npm or yarn
+- MongoDB (local installation or a MongoDB Atlas URI)
+
+## Running the App Locally
+
+To run it on your local machine, follow these steps:
+
+1. **Clone the repository**:
+   Make sure you have **Git** installed. Run the following command:
+
+   ```sh
+   git clone https://github.com/Kritika745/crypto.git
+   cd frontend
+   ```
+
+2. **Install dependencies**:
+   ```sh
+   npm install
+   ```
+
+3. **Run the app**:
+   ```sh
+   npm run dev
+   ```
+
