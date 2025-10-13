@@ -15,7 +15,7 @@ app.use(express.json())
 app.use(morgan("dev"))
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173",
+    origin: process.env.CORS_ORIGIN || "http://localhost:5173" || "https://washify-r8o1.vercel.app",
     credentials: true,
   }),
 )
