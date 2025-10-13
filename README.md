@@ -44,8 +44,61 @@ This project was developed as a MERN stack assessment, focusing on core CRUD fun
 - **Mongoose:** An Object Data Modeling (ODM) library for MongoDB and Node.js.
 
 ## Live Links
-- **Frontend Deployed Link:** [ https://washify-r8o1.vercel.app/]( https://washify-r8o1.vercel.app/)  
-  
+- **Frontend Deployed Link:** [ https://washify-r8o1.vercel.app/]( https://washify-r8o1.vercel.app/)
+
+## Project Structure
+
+```
+Washify/
+├── backend/
+│   ├── config/
+│   │   └── db.js          # Database connection configuration
+│   ├── controllers/
+│   │   └── bookingsController.js # Booking logic
+│   ├── middlewares/
+│   │   └── errorHandler.js # Error handling middleware
+│   │   └── validate.js     # Validation middleware
+│   ├── models/
+│   │   └── Booking.model.js  # Booking model
+│   ├── routes/
+│   │   └── bookings.js      # Booking routes
+│   ├── utils/
+│   │   └── buildQuery.js    # Utility functions for building queries
+│   ├── index.js             # Main backend entry point
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── api/
+│   │   │   └── axios.js       # Axios instance
+│   │   ├── components/
+│   │   │   └── AddOnsSelector.jsx # Add-ons selector component
+│   │   │   └── BookingCard.jsx    # Booking card component
+│   │   │   └── BookingConfirm.jsx # Booking confirmation component
+│   │   │   └── BookingReview.jsx  # Booking review component
+│   │   │   └── FilterSidebar.jsx  # Filter sidebar component
+│   │   │   └── Pagination.jsx     # Pagination component
+│   │   │   └── RatingStars.jsx    # Rating stars component
+│   │   │   └── SearchBar.jsx      # Search bar component
+│   │   │   └── SortBar.jsx        # Sort bar component
+│   │   ├── pages/
+│   │   │   └── BookingDetail.jsx  # Booking detail page
+│   │   │   └── BookingForm.jsx    # Booking form page
+│   │   │   └── Home.jsx           # Home page
+│   │   ├── App.jsx              # Main application component
+│   │   ├── main.jsx             # Main frontend entry point
+│   │   └── index.css            # Global styles
+│   ├── vite.config.js         # Vite configuration
+│   └── package.json
+├── .gitignore
+└── README.md
+```
+
+## 📸 Screenshots
+![Home Page](./public/home.png)
+![Home Page](./public/booking.png)
+![Home Page](./public/review.png)
+![Home Page](./public/confirmation.png)
+
 ## Local Setup
 - Follow these instructions to get the project running on your local machine.
 
