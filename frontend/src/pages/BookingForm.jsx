@@ -6,7 +6,6 @@ import { useNavigate, useParams, Link } from "react-router-dom"
 import { ArrowLeft } from "lucide-react"
 import api from "../api/axios.js"
 import AddOnsSelector from "../components/AddOnsSelector.jsx"
-import RatingStars from "../components/RatingStars.jsx"
 
 // A reusable form field component for consistency
 const FormField = ({ label, children }) => (
@@ -25,11 +24,9 @@ const initial = {
   duration: 60,
   price: 20,
   status: "Pending",
-  rating: 0,
   addOns: [],
 }
-
-export default function BookingForm({ mode }) {
+  export default function BookingForm({ mode }) {
   const { id } = useParams()
   const navigate = useNavigate()
   const [data, setData] = useState(initial)
@@ -56,11 +53,31 @@ export default function BookingForm({ mode }) {
 
   const onSubmit = async (e) => {
     e.preventDefault()
+    // Validate required fields before saving
+    const missing = []
+    if (!data.customerName?.trim()) missing.push("Customer Name")
+    if (!data.carDetails?.make?.trim()) missing.push("Car Make")
+    if (!data.carDetails?.model?.trim()) missing.push("Car Model")
+    if (!data.carDetails?.year) missing.push("Car Year")
+    if (!data.carDetails?.type) missing.push("Car Type")
+    if (!data.serviceType) missing.push("Service Type")
+    if (!data.date) missing.push("Date")
+    if (data.duration === "" || Number(data.duration) <= 0) missing.push("Duration")
+    if (data.price === "" || Number(data.price) <= 0) missing.push("Price")
+    if (!data.status) missing.push("Status")
+
+    if (missing.length) {
+      setError(`Please fill in required fields: ${missing.join(", ")}`)
+      return
+    }
+
     setSaving(true)
     setError(null)
     try {
       const payload = {
         ...data,
+        rating: undefined,
+        review: undefined,
         duration: Number(data.duration) || 0,
         price: Number(data.price) || 0,
         carDetails: {
@@ -198,9 +215,6 @@ export default function BookingForm({ mode }) {
                   <option>Completed</option>
                   <option>Cancelled</option>
                 </select>
-              </FormField>
-               <FormField label="Rating">
-                <RatingStars  value={data.rating || 0} onChange={(v) => setData({ ...data, rating: v })} />
               </FormField>
             </fieldset>
           </div>

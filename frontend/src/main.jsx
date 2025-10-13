@@ -5,6 +5,7 @@ import App from "./App.jsx"
 import Home from "./pages/Home.jsx"
 import BookingDetail from "./pages/BookingDetail.jsx"
 import BookingForm from "./pages/BookingForm.jsx"
+import BookingReview from "./pages/BookingReview.jsx"
 import "./index.css"
 
 const root = createRoot(document.getElementById("root"))
@@ -17,6 +18,7 @@ root.render(
           <Route path="booking/new" element={<BookingForm mode="create" />} />
           <Route path="booking/:id" element={<BookingDetail />} />
           <Route path="booking/:id/edit" element={<BookingForm mode="edit" />} />
+          <Route path="review/:id" element={<BookingReview />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

@@ -6,6 +6,7 @@ import { useNavigate, useParams, Link } from "react-router-dom"
 import { QRCodeCanvas } from "qrcode.react";
 import { ArrowLeft, Edit, Trash2, Printer, Copy, Star, Calendar, Clock, Layers, CheckCircle } from 'lucide-react'
 import api from "../api/axios.js"
+import RatingStars from "../components/RatingStars.jsx"; 
 
 // A reusable Detail Item component for consistency
 const DetailItem = ({ icon, label, children }) => (
@@ -26,7 +27,7 @@ export default function BookingDetail() {
   const [data, setData] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const shareUrl = window.location.href;
+  const [shareUrl, setShareUrl] = useState(window.location.href)
 
   useEffect(() => {
     let cancel = false
@@ -39,6 +40,13 @@ export default function BookingDetail() {
       .finally(() => !cancel && setLoading(false))
     return () => (cancel = true)
   }, [id])
+
+  useEffect(() => {
+    if (!data) return
+    const base = window.location.origin
+    const url = data.status === "Completed" ? `${base}/review/${data._id}` : `${base}/booking/${data._id}`
+    setShareUrl(url)
+  }, [data])
 
   const handleDelete = async () => {
     if (!confirm("Are you sure you want to delete this booking?")) return
@@ -95,6 +103,14 @@ export default function BookingDetail() {
             <Link to={`/booking/${data._id}/edit`} className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-slate-700 bg-white border border-slate-300 rounded-lg px-4 py-2 hover:bg-slate-100 transition-colors"> <Edit size={16} /> Edit </Link>
             <button onClick={handleDelete} className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-rose-600 bg-white border border-slate-300 rounded-lg px-4 py-2 hover:bg-rose-50 transition-colors"> <Trash2 size={16} /> Delete </button>
             <button onClick={printInvoice} className="inline-flex items-center justify-center gap-2 text-sm font-semibold text-white bg-sky-500 border border-sky-500 rounded-lg px-4 py-2 hover:bg-sky-600 transition-colors"> <Printer size={16} /> Print Invoice </button>
+            {data.status === "Completed" && !data.rating ? (
+             <Link
+            className="inline-flex items-center rounded-md bg-amber-500 text-white px-3 py-2 text-sm hover:bg-amber-600"
+            to={`/review/${data._id}`}
+            >
+            Leave Review
+            </Link>
+        ) : null}
           </div>
         </div>
 
@@ -117,9 +133,11 @@ export default function BookingDetail() {
                 <DetailItem label="Duration" icon={<CheckCircle size={16}/>}>{data.duration} minutes</DetailItem>
                 <DetailItem label="Add-ons" icon={<Layers size={16}/>}>{(data.addOns || []).join(", ") || "None"}</DetailItem>
                 <DetailItem label="Rating" icon={<Star size={16}/>}>
-                    <div className="flex items-center -ml-1">
-                      {[...Array(5)].map((_, i) => <Star key={i} size={18} className={i < (data.rating || 0) ? 'text-yellow-400 fill-current' : 'text-slate-300'}/>)}
-                    </div>
+                    {data.status === "Completed" && data.rating ? (
+                      <RatingStars value={data.rating} readOnly />
+                    ) : (
+                      <span className="text-slate-400">No review yet</span>
+                    )}
                 </DetailItem>
             </div>
             
@@ -148,7 +166,7 @@ export default function BookingDetail() {
           {/* Right Column: QR & Meta */}
           <div className="space-y-6 print:hidden">
               <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 text-center">
-                 <h3 className="font-semibold text-slate-800 mb-4">Share Booking</h3>
+                 <h3 className="mb-2 font-semibold">Share {data.status === "Completed" ? "Review Link" : "Booking"}</h3>                 
                  <div className="inline-block p-2 border border-slate-200 rounded-lg bg-white">
                     <QRCodeCanvas value={shareUrl} size={160} includeMargin />
                  </div>

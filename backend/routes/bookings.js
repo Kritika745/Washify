@@ -7,6 +7,7 @@ import {
   updateBooking,
   deleteBooking,
   searchBookings,
+  addReview,
 } from "../controllers/bookingsController.js"
 import { validate } from "../middlewares/validate.js"
 
@@ -41,6 +42,7 @@ router.post(
   "/",
   [
     body("customerName").exists().withMessage("customerName is required").isString().trim().notEmpty(),
+
     body("carDetails.make").exists().withMessage("carDetails.make is required").isString().trim().notEmpty(),
     body("carDetails.model").exists().withMessage("carDetails.model is required").isString().trim().notEmpty(),
     body("carDetails.year").exists().withMessage("carDetails.year is required").isInt({ min: 1950, max: 2100 }),
@@ -51,22 +53,13 @@ router.post(
       .withMessage("serviceType is required")
       .isIn(["Basic Wash", "Deluxe Wash", "Full Detailing"]),
     body("date").exists().withMessage("date is required").isISO8601(),
-    // timeSlot optional
-    body("timeSlot")
-      .optional()
-      .isString()
-      .trim(),
+    body("timeSlot").optional().isString().trim(),
     body("duration").exists().withMessage("duration is required").isInt({ min: 0 }),
     body("price").exists().withMessage("price is required").isFloat({ min: 0 }),
     body("status").exists().withMessage("status is required").isIn(["Pending", "Confirmed", "Completed", "Cancelled"]),
-    body("rating")
-  .optional({ nullable: true, checkFalsy: true })
-  .isInt({ min: 1, max: 5 }),
-
-    // addOns optional
-    body("addOns")
-      .optional()
-      .isArray(),
+    body("rating").not().exists().withMessage("rating cannot be set at creation"),
+    body("review").not().exists().withMessage("review cannot be set at creation"),
+    body("addOns").optional().isArray(),
   ],
   validate,
   createBooking,
@@ -97,5 +90,17 @@ router.put(
 
 // DELETE /api/bookings/:id?hard=true
 router.delete("/:id", [param("id").isMongoId()], validate, deleteBooking)
+
+// POST /api/bookings/:id/review
+router.post(
+  "/:id/review",
+  [
+    param("id").isMongoId(),
+    body("rating").exists().withMessage("rating is required").isInt({ min: 1, max: 5 }),
+    body("review").optional().isString().trim().isLength({ max: 1000 }),
+  ],
+  validate,
+  addReview,
+)
 
 export default router

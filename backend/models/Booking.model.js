@@ -30,7 +30,7 @@ const BookingSchema = new mongoose.Schema(
       required: true,
       default: "Pending",
     },
-    rating: { type: Number, min: 1, max: 5 },
+    review: { type: String, trim: true }, 
     addOns: [{ type: String, trim: true }], 
     isDeleted: { type: Boolean, default: false },
     deletedAt: { type: Date, default: null },

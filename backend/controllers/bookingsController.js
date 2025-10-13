@@ -49,11 +49,35 @@ export async function getBooking(req, res) {
 }
 
 export async function createBooking(req, res) {
-  const booking = await Booking.create(req.body)
+  const { rating, review, ...body } = req.body || {}
+  const booking = await Booking.create(body)
   res.status(201).json({ success: true, data: booking })
 }
 
 export async function updateBooking(req, res) {
+  if (
+    Object.prototype.hasOwnProperty.call(req.body, "rating") ||
+    Object.prototype.hasOwnProperty.call(req.body, "review")
+  ) {
+    const current = await Booking.findById(req.params.id).select("status isDeleted").lean()
+    if (!current || current.isDeleted) {
+      res.status(404)
+      throw new Error("Booking not found or deleted")
+    }
+    if (current.status !== "Completed") {
+      res.status(400)
+      throw new Error("Rating and review can only be set for Completed bookings")
+    }
+    // If rating present, validate bounds on server as safety net
+    if (req.body.rating != null) {
+      const r = Number(req.body.rating)
+      if (!(r >= 1 && r <= 5)) {
+        res.status(400)
+        throw new Error("Rating must be between 1 and 5")
+      }
+    }
+  }
+
   const updated = await Booking.findOneAndUpdate(
     { _id: req.params.id, isDeleted: false },
     { $set: req.body },
@@ -83,4 +107,31 @@ export async function deleteBooking(req, res) {
     throw new Error("Booking not found")
   }
   res.json({ success: true, message: "Booking soft-deleted" })
+}
+
+export async function addReview(req, res) {
+  const { id } = req.params
+  const { rating, review } = req.body || {}
+
+  const booking = await Booking.findById(id)
+  if (!booking || booking.isDeleted) {
+    res.status(404)
+    throw new Error("Booking not found")
+  }
+  if (booking.status !== "Completed") {
+    res.status(400)
+    throw new Error("Cannot add review: booking is not Completed")
+  }
+
+  const r = Number(rating)
+  if (!(r >= 1 && r <= 5)) {
+    res.status(400)
+    throw new Error("Rating must be between 1 and 5")
+  }
+
+  booking.rating = r
+  booking.review = typeof review === "string" ? review.trim() : booking.review
+  await booking.save()
+
+  res.json({ success: true, message: "Review saved", data: { rating: booking.rating, review: booking.review } })
 }
