@@ -1,6 +1,10 @@
 import Booking from "../models/Booking.model.js"
 import { buildFilters, buildSort } from "../utils/buildQuery.js"
 
+function escapeRegex(input) {
+  return String(input).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+}
+
 export async function listBookings(req, res) {
   const { page = 1, limit = 10, q, sortBy = "createdAt", order = "desc" } = req.query
 
@@ -8,9 +12,17 @@ export async function listBookings(req, res) {
   let query = Booking.find(filters)
 
   if (q && q.trim()) {
+    const qTrim = q.trim()
+    const rx = new RegExp(escapeRegex(qTrim), "i")
     query = Booking.find({
       ...filters,
-      $text: { $search: q.trim() },
+      $or: [
+        { customerName: { $regex: rx } },
+        { "carDetails.make": { $regex: rx } },
+        { "carDetails.model": { $regex: rx } },
+        { "carDetails.type": { $regex: rx } },
+        { serviceType: { $regex: rx } },
+      ],
     })
   }
 
