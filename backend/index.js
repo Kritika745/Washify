@@ -13,12 +13,27 @@ const port = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(morgan("dev"))
+
+const allowedOrigins = [
+  process.env.CORS_ORIGIN,
+  "http://localhost:5173",
+  "https://washify-r8o1.vercel.app",
+];
+
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:5173" || "https://washify-r8o1.vercel.app",
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        console.warn(`❌ CORS blocked for origin: ${origin}`);
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
-  }),
-)
+  })
+);
+
 
 // Health check
 app.get("/api/health", (_req, res) => {
