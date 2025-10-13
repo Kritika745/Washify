@@ -6,6 +6,7 @@ import Home from "./pages/Home.jsx"
 import BookingDetail from "./pages/BookingDetail.jsx"
 import BookingForm from "./pages/BookingForm.jsx"
 import BookingReview from "./pages/BookingReview.jsx"
+import BookingConfirm from "./components/BookingConfirm.jsx"
 import "./index.css"
 
 const root = createRoot(document.getElementById("root"))
@@ -19,6 +20,8 @@ root.render(
           <Route path="booking/:id" element={<BookingDetail />} />
           <Route path="booking/:id/edit" element={<BookingForm mode="edit" />} />
           <Route path="review/:id" element={<BookingReview />} />
+          <Route path="confirm/:id" element={<BookingConfirm />} />
+          <Route path="confirm/:id/share" element={<BookingConfirm share={true} />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>
