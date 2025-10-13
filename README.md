@@ -44,8 +44,7 @@ This project was developed as a MERN stack assessment, focusing on core CRUD fun
 - **Mongoose:** An Object Data Modeling (ODM) library for MongoDB and Node.js.
 
 ## Live Links
-- **Frontend Deployed Link:** [Your Deployed Frontend URL Here]  
-- **Backend API Link:** [Your Deployed Backend URL Here]
+- **Frontend Deployed Link:** [ https://washify-r8o1.vercel.app/]( https://washify-r8o1.vercel.app/)  
   
 ## Local Setup
 - Follow these instructions to get the project running on your local machine.
@@ -64,17 +63,41 @@ To run it on your local machine, follow these steps:
    Make sure you have **Git** installed. Run the following command:
 
    ```sh
-   git clone https://github.com/Kritika745/crypto.git
-   cd frontend
+   git clone https://github.com/Kritika745/Washify.git
+   cd Washify
    ```
 
-2. **Install dependencies**:
+2. **Backend setup**:
    ```sh
+   cd backend
    npm install
    ```
+    Create a .env file in the backend folder with the following content:
+   ```sh
+   PORT=5000
+   MONGODB_URI=<your-mongodb-connection-string>
+   CORS_ORIGIN=http://localhost:5173
 
-3. **Run the app**:
+   ```
+   Start the backend server:
    ```sh
    npm run dev
    ```
+
+
+3. **Frontend setup**:
+   ```sh
+   cd frontend
+   npm install
+   ```
+    Create a .env file in the frontend folder with the following content:
+   ```sh
+   VITE_API_BASE_URL=http://localhost:5000/api
+   ```
+   Start the frontend:
+   ```sh
+   npm run dev
+   ```
+
+   
 
