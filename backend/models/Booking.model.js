@@ -2,7 +2,7 @@ import mongoose from "mongoose"
 
 const CarDetailsSchema = new mongoose.Schema(
   {
-   make: { type: String, trim: true, required: true },
+    make: { type: String, trim: true, required: true },
     model: { type: String, trim: true, required: true },
     year: { type: Number, min: 1950, max: 2100, required: true },
     type: { type: String, trim: true, required: true }, // sedan, suv, hatchback, luxury
@@ -21,7 +21,7 @@ const BookingSchema = new mongoose.Schema(
       default: "Basic Wash",
     },
     date: { type: Date, required: true },
-    timeSlot: { type: String, trim: true }, 
+    timeSlot: { type: String, trim: true }, // optional by request
     duration: { type: Number, min: 0, required: true }, // minutes
     price: { type: Number, min: 0, required: true },
     status: {
@@ -30,8 +30,9 @@ const BookingSchema = new mongoose.Schema(
       required: true,
       default: "Pending",
     },
-    review: { type: String, trim: true }, 
-    addOns: [{ type: String, trim: true }], 
+    rating: { type: Number, min: 1, max: 5 }, // no longer required
+    review: { type: String, trim: true }, // optional
+    addOns: [{ type: String, trim: true }], // optional by request
     isDeleted: { type: Boolean, default: false },
     deletedAt: { type: Date, default: null },
   },
