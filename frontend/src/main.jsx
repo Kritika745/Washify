@@ -5,7 +5,7 @@ import App from "./App.jsx"
 import Home from "./pages/Home.jsx"
 import BookingDetail from "./pages/BookingDetail.jsx"
 import BookingForm from "./pages/BookingForm.jsx"
-import BookingReview from "./pages/BookingReview.jsx"
+import BookingReview from "./components/BookingReview.jsx"
 import BookingConfirm from "./components/BookingConfirm.jsx"
 import "./index.css"
 

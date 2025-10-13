@@ -140,7 +140,7 @@ export default function BookingConfirm() {
       </section>
 
       <div className="mt-6 flex items-center justify-between">
-        <Link to={`/bookings/${data._id}`} className="text-sm text-gray-700 underline">
+        <Link to={`/booking/${data._id}`} className="text-sm text-gray-700 underline">
           View full booking details
         </Link>
         <Link to="/" className="text-sm text-gray-700 underline">
